@@ -2,6 +2,8 @@
 documents/html/*
 documents/latex/*
 
+build/*
+
 # Prerequisites
 *.d
 
