@@ -1,3 +1,7 @@
+#customize
+documents/html/*
+documents/latex/*
+
 # Prerequisites
 *.d
 
