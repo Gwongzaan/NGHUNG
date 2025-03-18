@@ -3,7 +3,9 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "/opt/boost/include/",
+                "${workspaceFolder}/include/containers"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
