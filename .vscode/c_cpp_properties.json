@@ -6,7 +6,8 @@
                 "${workspaceFolder}/**",
                 "/opt/boost/include/",
                 "${workspaceFolder}/include/containers",
-                "${workspaceFolder}/include/utility"
+                "${workspaceFolder}/include/utility",
+                "${workspaceFolder}/include/errors"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
