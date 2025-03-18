@@ -13,6 +13,7 @@ FetchContent_MakeAvailable(googletest)
 set(SRC_FILES 
     ../include/utility/utils.h
     ../include/utility/optimization_utils.h
+    ../include/errors/errno.h
 )
 
 # add test executable
@@ -21,6 +22,7 @@ add_executable(
     main.cpp
     test_utils.cpp
     test_optimization_utils.cpp
+    test_errors.cpp
     ${SRC_FILES}
 
 )
