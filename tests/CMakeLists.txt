@@ -11,7 +11,8 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 set(SRC_FILES 
-    ../include/utils.h
+    ../include/utility/utils.h
+    ../include/utility/optimization_utils.h
 )
 
 # add test executable
@@ -19,6 +20,7 @@ add_executable(
     test_NGHUNG
     main.cpp
     test_utils.cpp
+    test_optimization_utils.cpp
     ${SRC_FILES}
 
 )

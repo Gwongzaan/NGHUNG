@@ -14,7 +14,7 @@
 #include <cstdint>
 #include <boost/intrusive/list.hpp>
 
-namespace NGHUNG
+namespace nghung
 {
     /**
      * @brief
@@ -32,6 +32,6 @@ namespace NGHUNG
     template <typename T, typename... Options>
     using List = boost::intrusive::list<T, Options...>;
 
-} // namespace NGHUNG
+} // namespace nghung
 
 #endif

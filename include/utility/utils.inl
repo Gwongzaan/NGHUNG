@@ -11,8 +11,6 @@
 #ifndef NGHUNG_UTIL_INL
 #define NGHUNG_UTIL_INL
 
-#include "types.h"
-
 #include <string>
 #include <chrono>
 #include <ctime>
@@ -20,21 +18,8 @@
 #include <iostream>
 #include <iomanip>
 
-namespace NGHUNG
+namespace nghung
 {
-    constexpr Timestamp SEC_2_NS_FACTOR{1000000000};
-
-    /**
-     * @brief
-     *  convert number to numeric format
-     *
-     *  for example:
-     *
-     *      100000 -> 100,000
-     *
-     * @param num
-     * @return std::string
-     */
     template <typename T>
     inline std::string format_number(T num)
     {
@@ -44,11 +29,6 @@ namespace NGHUNG
         return ss.str();
     }
 
-    /**
-     * @brief Get the hft timestamp in nanoseconds
-     *
-     * @return Timestamp
-     */
     inline Timestamp get_hft_timestamp_ns()
     {
         timespec ts;
@@ -63,14 +43,7 @@ namespace NGHUNG
         return (ts.tv_sec * SEC_2_NS_FACTOR) + ts.tv_nsec;
     }
 
-    /**
-     * @brief convert nanoseconds timestamp to human readable format
-     *
-     * @param nanoseconds
-     * @param format
-     * @return std::string
-     */
-    inline std::string nanoseconds_to_time(Timestamp nanoseconds, const char format[] = "%Y-%m-%d %H:%M:%S")
+    inline std::string nanoseconds_to_time(Timestamp nanoseconds, const char format[])
     {
         using namespace std::chrono;
         Timestamp seconds{nanoseconds / SEC_2_NS_FACTOR};
@@ -87,6 +60,6 @@ namespace NGHUNG
 
         return ss.str();
     }
-} // namespace NGHUNG
+} // namespace nghung
 
 #endif

@@ -4,12 +4,11 @@
 #include <unistd.h>   // for sysconf
 #include <dlfcn.h>    // for dlsym
 #include <cstdlib>
-#include "utils.h"
-#include "types.h"
+#include "utility/utils.h"
 
-TEST(FormatNumberTest, IntegerTest)
+TEST(utility_utils_FormatNumberTest, IntegerTest)
 {
-    using namespace NGHUNG;
+    using namespace nghung;
     EXPECT_EQ(format_number(1230), "1,230");
     EXPECT_EQ(format_number(-456), "-456");
     EXPECT_EQ(format_number(0), "0");
@@ -17,9 +16,9 @@ TEST(FormatNumberTest, IntegerTest)
     EXPECT_EQ(format_number(std::numeric_limits<int>::min()), "-2,147,483,648");
 }
 
-TEST(FormatNumberTest, DoubleTest)
+TEST(utility_utils_FormatNumberTest, DoubleTest)
 {
-    using namespace NGHUNG;
+    using namespace nghung;
     EXPECT_EQ(format_number(3.14), "3.140000");
     EXPECT_EQ(format_number(2345.23), "2,345.230000");
     EXPECT_EQ(format_number(-2.718), "-2.718000");
@@ -31,9 +30,9 @@ TEST(FormatNumberTest, DoubleTest)
     EXPECT_EQ(format_number(-std::numeric_limits<double>::infinity()), "-inf");
 }
 
-TEST(FormatNumberTest, FloatTest)
+TEST(utility_utils_FormatNumberTest, FloatTest)
 {
-    using namespace NGHUNG;
+    using namespace nghung;
     EXPECT_EQ(format_number(1.5f), "1.500000");
     EXPECT_EQ(format_number(-2.25f), "-2.250000");
     EXPECT_EQ(format_number(0.0f), "0.000000");
@@ -44,16 +43,16 @@ TEST(FormatNumberTest, FloatTest)
     EXPECT_EQ(format_number(-std::numeric_limits<float>::infinity()), "-inf");
 }
 
-TEST(TimestampTest, BasicFunctionality)
+TEST(utility_utils_TimestampTest, BasicFunctionality)
 {
-    using namespace NGHUNG;
+    using namespace nghung;
     Timestamp timestamp = get_hft_timestamp_ns();
     EXPECT_NE(timestamp, 0); // Timestamp should not be zero
 }
 
-TEST(TimestampTest, ReasonableValue)
+TEST(utility_utils_TimestampTest, ReasonableValue)
 {
-    using namespace NGHUNG;
+    using namespace nghung;
     Timestamp timestamp = get_hft_timestamp_ns();
     time_t current_time_sec;
     time(&current_time_sec);
@@ -68,13 +67,15 @@ int mock_clock_gettime(clockid_t clk_id, struct timespec *tp)
 {
     return -1;
 }
-// TODO continue debuging the issues, this is a miscellaneous function, and the issue is in the test code, focus on developeing core component first
+// TODO continue debuging the issues,
+// this is a miscellaneous function, and the issue is in the test code,
+// focus on developeing core component first
 // https://gemini.google.com/app/f08ccdedf4607eb6
 
 /*
 TEST(TimestampTest, ClockFailureHandling)
 {
-    using namespace NGHUNG;
+    using namespace nghung;
     std::stringstream buffer;
     std::streambuf *oldcerr = std::cerr.rdbuf(buffer.rdbuf());
 
@@ -121,10 +122,11 @@ TEST(TimestampTest, ClockFailureHandling)
 
 // this test will only run if CLOCK_REALTIME fails.
 // TODO read and understanding it better, genemi generated this test case
+
 /*
 TEST(TimestampTest, ClockFailureHandling)
 {
-    using namespace NGHUNG;
+    using namespace nghung;
     // Redirect cerr to a string stream to capture the error message
     std::stringstream buffer;
     std::streambuf *oldcerr = std::cerr.rdbuf(buffer.rdbuf());
@@ -151,7 +153,7 @@ TEST(TimestampTest, ClockFailureHandling)
     *(void **)clock_gettime_ptr = mock_ptr;
 
     // Capture the exit call.
-    // TODO segamentaion fault,
+    // TODO segamentaion fault occurs here,
     testing::FLAGS_gtest_death_test_style = "threadsafe";
     ASSERT_EXIT(get_hft_timestamp_ns(), testing::ExitedWithCode(EXIT_FAILURE), "Error getting timestamp");
 
@@ -164,41 +166,41 @@ TEST(TimestampTest, ClockFailureHandling)
 }
     */
 
-TEST(NanosecondsToTimeTest, BasicTest)
+TEST(utility_utils_NanosecondsToTimeTest, BasicTest)
 {
-    using namespace NGHUNG;
+    using namespace nghung;
     Timestamp nanoseconds = 1678886400000000000; // March 15, 2023 13:20:00 UTC
     std::string expected = "2023-03-15 13:20:00.000000000 UTC";
     ASSERT_EQ(nanoseconds_to_time(nanoseconds), expected);
 }
 
-TEST(NanosecondsToTimeTest, WithNanoseconds)
+TEST(utility_utils_NanosecondsToTimeTest, WithNanoseconds)
 {
-    using namespace NGHUNG;
+    using namespace nghung;
     Timestamp nanoseconds = 1678886400123456789;
     std::string expected = "2023-03-15 13:20:00.123456789 UTC";
     ASSERT_EQ(nanoseconds_to_time(nanoseconds), expected);
 }
 
-TEST(NanosecondsToTimeTest, DifferentFormat)
+TEST(utility_utils_NanosecondsToTimeTest, DifferentFormat)
 {
-    using namespace NGHUNG;
+    using namespace nghung;
     Timestamp nanoseconds = 1678886400123456789;
     std::string expected = "03/15/2023 13:20:00.123456789 UTC";
     ASSERT_EQ(nanoseconds_to_time(nanoseconds, "%m/%d/%Y %H:%M:%S"), expected);
 }
 
-TEST(NanosecondsToTimeTest, ZeroNanoseconds)
+TEST(utility_utils_NanosecondsToTimeTest, ZeroNanoseconds)
 {
-    using namespace NGHUNG;
+    using namespace nghung;
     Timestamp nanoseconds = 0;
     std::string expected = "1970-01-01 00:00:00.000000000 UTC";
     ASSERT_EQ(nanoseconds_to_time(nanoseconds), expected);
 }
 
-TEST(NanosecondsToTimeTest, NearOverflow)
+TEST(utility_utils_NanosecondsToTimeTest, NearOverflow)
 {
-    using namespace NGHUNG;
+    using namespace nghung;
     // Test a time near the max u_int64_t value.
     Timestamp nanoseconds = 18446744073709551615ULL; // max u_int64_t value
     // This test is hard to make exact because the max time_t is implementation dependent.
@@ -208,9 +210,9 @@ TEST(NanosecondsToTimeTest, NearOverflow)
     ASSERT_FALSE(result.empty());
 }
 
-TEST(NanosecondsToTimeTest, VerySmallNanoseconds)
+TEST(utility_utils_NanosecondsToTimeTest, VerySmallNanoseconds)
 {
-    using namespace NGHUNG;
+    using namespace nghung;
     Timestamp nanoseconds = 1ULL;
     std::string expected = "1970-01-01 00:00:00.000000001 UTC";
     ASSERT_EQ(nanoseconds_to_time(nanoseconds), expected);
