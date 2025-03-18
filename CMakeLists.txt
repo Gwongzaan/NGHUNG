@@ -24,6 +24,12 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O0 -march=native -flto=8 -fno-inline -g -DN
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -march=native -flto=8 -g -DNDEBUG")
 # set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -march=native -flto=8 -g -DNDEBUG")
 
+find_package(Boost 1.87 REQUIRED)
+if (Boost_FOUND)
+    include_directories(${Boost_INCLUDE_DIRS})
+endif()
+
+
 include_directories(include)
 
 add_subdirectory(src)

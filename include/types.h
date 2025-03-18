@@ -11,7 +11,8 @@
 #ifndef NGHUNG_TYPES_H
 #define NGHUNG_TYPES_H
 
-#include <sys/types.h>
+#include <cstdint>
+#include <boost/intrusive/list.hpp>
 
 namespace NGHUNG
 {
@@ -21,10 +22,16 @@ namespace NGHUNG
      *
      *  \ref reasoning/why-u_int64_t-for-timestamp.md "detailed reasoning of choosing u_int64_t"
      */
-    using Timestamp = u_int64_t;
-    using OrderID = u_int64_t;
-    using Quantity = u_int32_t;
-    using Price = double;
+    using Timestamp = uint64_t;
+    using OrderID = uint64_t;
+    using Quantity = uint32_t;
+    using Price = uint64_t;
+    using SymbolID = uint32_t;
+    using Volume = uint64_t;
+
+    template <typename T, typename... Options>
+    using List = boost::intrusive::list<T, Options...>;
+
 } // namespace NGHUNG
 
 #endif
