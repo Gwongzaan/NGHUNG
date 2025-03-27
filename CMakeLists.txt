@@ -15,6 +15,8 @@ endif()
 #
 # for debuging
 # 
+option(DEBUG, "enable DEBUG lines" ON)
+
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0 -march=native -flto=8 -fno-inline -g -DNDEBUG")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O0 -march=native -flto=8 -fno-inline -g -DNDEBUG")
 

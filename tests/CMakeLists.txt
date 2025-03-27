@@ -14,6 +14,7 @@ set(SRC_FILES
     ../include/utility/utils.h
     ../include/utility/optimization_utils.h
     ../include/errors/errno.h
+    ../include/containers/list.h
 )
 
 # add test executable
@@ -23,6 +24,7 @@ add_executable(
     test_utils.cpp
     test_optimization_utils.cpp
     test_errors.cpp
+    test_list.cpp
     ${SRC_FILES}
 
 )
